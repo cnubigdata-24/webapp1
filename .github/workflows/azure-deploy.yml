@@ -37,7 +37,7 @@ jobs:
     - name: Run Tests
       run: |
         source venv/bin/activate
-        pytest tests/
+        pytest
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,13 +47,26 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Login to Azure
+    - name: Log in to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        package: .
+    - name: Build and Push Docker Image to ACR
+      run: |
+        az acr login --name mycontainerregistry0105
+        docker build -t mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} .
+        docker push mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }}
+
+    - name: Deploy to Azure Container Instance
+      run: |
+        az container create \
+          --resource-group ${{ secrets.RESOURCE_GROUP }} \
+          --name webapp1 \
+          --image mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} \
+          --dns-name-label webapp1 \
+          --ports 80 \
+          --registry-login-server ${{ secrets.REGISTRY_LOGIN_SERVER }} \
+          --registry-username ${{ secrets.REGISTRY_USERNAME }} \
+          --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
+          --location korea central
