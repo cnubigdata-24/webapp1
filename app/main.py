@@ -1,7 +1,12 @@
+import os
 from flask import Flask
+
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def home():
-    return "Hello, Flask CI/CD on MS Azure (0105_1553) !!! Success"
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return f"Hello, World! CI/CD Test with GitHub Action and MS Azure !!!\nCurrent Time: {current_time}"
+
