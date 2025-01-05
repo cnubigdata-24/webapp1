@@ -1,4 +1,4 @@
-name: Flask CI/CD Pipeline to Azure (Free Tier)
+name: Flask CI/CD Pipeline to MS Azure
 
 on:
   push:
