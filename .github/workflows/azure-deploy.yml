@@ -55,16 +55,16 @@ jobs:
 
     - name: Build and Push Docker Image to ACR
       run: |
-        az acr login --name mycontainerregistry0105
-        docker build -t mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} .
-        docker push mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }}
+        az acr login --name ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/fastapiapp:${{ github.sha }} .
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/fastapiapp:${{ github.sha }}
 
     - name: Deploy to Azure Container Instance
       run: |
         az container create \
           --resource-group ${{ secrets.RESOURCE_GROUP }} \
           --name webapp1 \
-          --image mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} \
+          --image ${{ secrets.REGISTRY_LOGIN_SERVER }}/fastapiapp:${{ github.sha }} \
           --dns-name-label webapp1 \
           --ports 80 \
           --registry-login-server ${{ secrets.REGISTRY_LOGIN_SERVER }} \
