@@ -4,4 +4,4 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello, Flask CI/CD on MS Azure"
+    return "Hello, Flask CI/CD on MS Azure (0105_22222)"
