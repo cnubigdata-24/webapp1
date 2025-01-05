@@ -26,4 +26,3 @@ def test_alternative_response():
 
     # 추가 메시지 예제 검증
     assert b"CI/CD Test with GitHub Action" in response.data
-
