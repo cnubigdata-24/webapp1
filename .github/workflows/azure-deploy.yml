@@ -37,7 +37,7 @@ jobs:
     - name: Run Tests
       run: |
         source venv/bin/activate
-        pytest
+        pytest tests/
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,4 +56,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        package: ${{ secrets.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: .
