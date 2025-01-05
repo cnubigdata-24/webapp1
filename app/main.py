@@ -1,5 +1,5 @@
 from flask import Flask
-from datetime import datetime  # datetime 모듈 추가
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -11,4 +11,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)  # 로컬 실행 추가
+    app.run(host="0.0.0.0", port=80)  # 로컬 실행 지원
