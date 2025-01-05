@@ -2,9 +2,11 @@
 exclude = 
     .git,
     __pycache__,
-    myenv/,  # 가상환경 제외
+    myenv/,  
     venv/,
     build/,
     dist/
 
-max-line-length = 120  # 허용 줄 길이 증가 (기본값 79)
+max-line-length = 120
+
+# 주석은 별도의 줄로 작성합니다.
