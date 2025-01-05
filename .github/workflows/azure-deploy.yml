@@ -38,7 +38,7 @@ jobs:
       run: |
         source venv/bin/activate
         export PYTHONPATH=$PYTHONPATH:/home/runner/work/webapp1
-        pytest
+        pytest tests/
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,13 +53,10 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Log in to ACR
-      run: |
-        az acr login --name mycontainerregistry0105
-
     - name: Build and Push Docker Image to ACR
       run: |
-        docker build --no-cache -t mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} .
+        az acr login --name mycontainerregistry0105
+        docker build -t mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }} .
         docker push mycontainerregistry0105.azurecr.io/fastapiapp:${{ github.sha }}
 
     - name: Deploy to Azure Container Instance
@@ -73,6 +70,4 @@ jobs:
           --registry-login-server ${{ secrets.REGISTRY_LOGIN_SERVER }} \
           --registry-username ${{ secrets.REGISTRY_USERNAME }} \
           --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
-          --location koreacentral \
-          --restart-policy Never \
-          --environment-variables FLASK_ENV=production PORT=80
+          --location eastus
