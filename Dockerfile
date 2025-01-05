@@ -14,7 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Command to run Gunicorn WSGI server
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app.main:app"]
-
-
-
+CMD ["gunicorn", "-b", "0.0.0.0:80", "app.main:app"]
