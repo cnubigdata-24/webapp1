@@ -4,6 +4,9 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
+# Set PYTHONPATH for module resolution
+ENV PYTHONPATH=/app
+
 # Copy application code
 COPY . .
 
